@@ -24,7 +24,6 @@ class UserList:
 			return len(self.user_list)  + 1
 
 	def get_specific_user(self, id):
-
 		specific_user = [user for user in self.user_list if user['user_id'] == id]
 
 		try:
