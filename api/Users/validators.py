@@ -26,7 +26,7 @@ def create_new_user():
 
 
 
-	id = userlist.generate_user_id()
+	user_id = userlist.generate_user_id()
 
 	isadmin = False
 	registered = date_today = datetime.now().strftime('%d%m%y %H%M')
