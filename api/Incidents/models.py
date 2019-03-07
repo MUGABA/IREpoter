@@ -2,8 +2,8 @@ import uuid
 
 class Models:
 
-	def __init__(self,id, createdOn, createdBy, location, status, incident_type, images, videos, comment):
-		self.id = id
+	def __init__(self,incident_id, createdOn, createdBy, location, status, incident_type, images, videos, comment):
+		self.incident_id = incident_id
 		self.createdOn = createdOn
 		self.createdBy = createdBy
 		self.location = location

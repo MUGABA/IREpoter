@@ -1,6 +1,8 @@
 from flask import Blueprint
 from . contrals import report_an_incident,fetch_all_redflags,fetch_specific_redflag, \
-edit_location_of_redflag,edit_comment_of_redflag,remove_an_incident
+edit_location_of_redflag,edit_comment_of_redflag,delete_an_incident
+
+from . methods import IncidentList
 
 incidentbluerprint = Blueprint('app',__name__)
 
@@ -25,8 +27,14 @@ def patch_comment_of_incident(redflag_id):
 	return edit_comment_of_redflag(redflag_id)
 
 @incidentbluerprint.route('/red-flags/<int:redflag_id>', methods = ['DELETE'])
-def delete_an_incident(redflag_id):
-	return remove_an_incident(redflag_id)
+def remove_an_incident(redflag_id):
+	# redflag = IncidentList.get_specific_incident(redflag_id)
+	# if redflag:
+	# 	IncidentList.incident_list.remove(redflag)
+	# 	return 'redflag deleted'
+	# return 'not deleted'
+
+	return delete_an_incident(redflag_id)
 
 
 

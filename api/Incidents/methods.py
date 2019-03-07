@@ -21,10 +21,10 @@ class IncidentList:
 
 	def get_specific_incident(self, id):
 
-		specific_incident = [incident for incident in self.incident_list if incident['id'] == id]
+		specific_incident = [incident for incident in self.incident_list if incident['incident_id'] == id]
 
 		try:
 			return specific_incident
 
 		except:
-			return 'no incident with that id'
+			return ''

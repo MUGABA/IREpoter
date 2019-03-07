@@ -17,11 +17,11 @@ def report_an_incident():
 	data.get('incident_type'),data.get('images'),data.get('videos'), \
 	data.get('comment')
 
-	id = inciden.generate_incident_id()
+	incident_id = inciden.generate_incident_id()
 
 	createdOn = date_today = datetime.now().strftime('%d%m%y %H%M')
 
-	new_incident = Models(id, createdOn, createdBy, location, status, incident_type, images, videos, comment)
+	new_incident = Models(incident_id, createdOn, createdBy, location, status, incident_type, images, videos, comment)
 	if location == "" or createdBy == '':
 		return jsonify({"message": "location,incident_type and createdBy can not be empty"}),400
 
@@ -30,7 +30,7 @@ def report_an_incident():
 	return jsonify({"incident" : inciden.incident_list[-1]}),200
 
 def fetch_all_redflags():
-	return jsonify({"red-flags" : inciden.get_all_incidents()})
+	return jsonify({"red-flags" : inciden.get_all_incidents()}),200
 
 def fetch_specific_redflag(redflag_id):
 	if not inciden.get_specific_incident(redflag_id):
@@ -54,20 +54,15 @@ def edit_comment_of_redflag(redflag_id):
 		comment = request.get_json()['comment']
 		new_comment = comment
 		redflag[0]['comment'] = new_comment
-		return jsonify({"Incident" : redflag})
+		return jsonify({"Incident" : redflag}),200
 
-	return jsonify({"message" : "No incident that id "})
+	return jsonify({"message" : "No incident that id "}),400
 
 
-def remove_an_incident(redflag_id):
-	redflag = inciden.get_specific_incident(redflag_id)
+def delete_an_incident(id):
 	for redflag in inciden.incident_list:
-		inciden.incident_list.remove(redflag)
-		return jsonify({"message":"Incident deleted"})
-	else:
-		return jsonify({"message" : "red-flag does not exist"})
-
-
-
-
+		if redflag['incident_id'] == id:
+			inciden.incident_list.remove(redflag)
+			return jsonify({"message": "incident is now now removed"}),200
+	return jsonify({"message": "The incident your looking for is not found"}),201
 
