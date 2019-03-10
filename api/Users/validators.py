@@ -31,13 +31,13 @@ def create_new_user():
 	isadmin = False
 	registered = date_today = datetime.now().strftime('%d%m%y %H%M')
 
-	new_user  = User(id, firstname,lastname,othername,username,email, \
+	new_user  = User(user_id, firstname,lastname,othername,username,email, \
 		password,phonenumber,registered,isadmin)
 
 	if email == '' or username == '' or password == '':
 		return jsonify({"message" : "email, username and password cannot be empty"}),200
 
-	password = generate_password_hash(password)
+	new_user.password = generate_password_hash(password)
 
 	if new_user.email:
 		for usie in userlist.user_list:
@@ -57,9 +57,9 @@ def getall_users():
 def sign_in_user():
 	data = request.get_json()
 
-	usernme = data.get('usernme')
+	usernme = data.get('username')
 
-	passcode = data.get('passcode')
+	passcode = data.get('password')
 
 	if usernme == '' or passcode == '':
 		return jsonify({"message" : "password or username can not be empty"}),400
@@ -73,4 +73,7 @@ def sign_in_user():
 		if user['username'] == usernme and check_password_hash(user['password'],passcode):
 			return jsonify({"message" : "your welcome {} your loged in ".format(usernme)}),200
 	return jsonify({"message" : "The user doesnot exist"})
+
+def homepage():
+	return jsonify({"message" : "Welcome to ireporter"}),200
 
